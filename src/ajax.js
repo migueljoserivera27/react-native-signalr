@@ -41,8 +41,15 @@ export default (headers, options) => {
     });
   }
 
+  if (options.headers) {
+    Object.keys(options.headers).forEach(key => {
+      const value = options.headers[key];
+      request.setRequestHeader(key, value);
+    });
+  }
+
   request.send(
-    options.type === 'POST' ? options.data && qs(options.data) : undefined,
+      options.type === 'POST' ? options.data && qs(options.data) : undefined,
   );
 
   return {
