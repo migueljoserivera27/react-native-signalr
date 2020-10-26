@@ -6,7 +6,7 @@ const makeSureDocument = () => {
   if (!window.document.readyState) {
     window.document.readyState = "complete";
   }
-  return () => (window.document = originalDocument);
+  return () => (window.document = originalDocument || window.document);
 };
 
 if (!window.addEventListener) {
