@@ -26,7 +26,7 @@ export default {
     window.console.debug = logger;
     return () => (window.console.debug = originalDebug);
   },
-  hubConnection: (serverUrl, options) => {
+  hubConnection: (serverUrl, options, azureServerUrl = undefined) => {
     const revertDocument = makeSureDocument();
     if (!signalRHubConnectionFunc) {
       require("signalr");
@@ -45,12 +45,12 @@ export default {
       window.document.createElement = () => {
         return {
           protocol,
-          host,
+          host: azureServerUrl || host,
         };
       };
       window.location = {
         protocol,
-        host,
+        host: azureServerUrl || host,
       };
       const returnValue = originalStart.call(hubConnectionFunc, options, ...args);
       revertDocument();
